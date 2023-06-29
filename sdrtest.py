@@ -9,14 +9,18 @@ sdr = RtlSdr()
 # configure device
 sdr.sample_rate = 2.4e6
 sample_rate = sdr.sample_rate
-sdr.center_freq = 4.22e6
+sdr.center_freq = 4.22e6 #should be set to desired frequency
 center_freq = sdr.center_freq
 sdr.gain = 4
+Time = 10.0 # ms (can be decimal)
 
-NumberOfSamples = 256*math.floor(sample_rate*.1/256)
-samples = sdr.read_samples(NumberOfSamples)
+#CHANGE NUMBER OF SAMPLES USING TIME
+NumberOfSamples = 256*math.floor(sample_rate*Time/(256*1000)) #number of samples must be a multiple of 256
+samples = sdr.read_samples(NumberOfSamples) #read in data
 sdr.close()
 
+#Plot data
+#Time domain first
 time_axis = np.linspace(0, NumberOfSamples/sample_rate, int(NumberOfSamples))
 plt.plot(time_axis/1e-3, samples.real, 'g')
 plt.plot(time_axis/1e-3, samples.imag, 'r')
@@ -25,6 +29,7 @@ plt.ylabel('Amplitude')
 
 plt.show()
 
+#FFT to have Frequency Domain Second
 X = fft(samples)
 N = len(X)
 n = np.arange(N)
