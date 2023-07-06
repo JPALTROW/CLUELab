@@ -13,13 +13,14 @@ sdr.center_freq = 4e6 #should be set to desired frequency
 center_freq = sdr.center_freq
 sdr.gain = 40.2
 sdr.set_direct_sampling(2)
-Time = 10.0 # ms (can be decimal)
 
 #CHANGE NUMBER OF SAMPLES USING TIME
-# NumberOfSamples = 256*math.floor(sample_rate*Time/(256*1000)) #number of samples must be a multiple of 256
-NumberOfSamples = 1024*256
+NumberOfSamples = 10*256
 samples = sdr.read_samples(NumberOfSamples) #read in data
 sdr.close()
+print(0.8*sample_rate/1000)
+samples = samples[int(0.8*sample_rate/1000):]
+NumberOfSamples-=int(0.8*sample_rate/1000)
 
 #Plot data
 #Time domain first
