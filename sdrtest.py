@@ -13,14 +13,22 @@ sdr.center_freq = 4e6 #should be set to desired frequency
 center_freq = sdr.center_freq
 sdr.gain = 40.2
 sdr.set_direct_sampling(2)
+f = open("output.txt", "w")
+
+
 
 #CHANGE NUMBER OF SAMPLES USING TIME
-NumberOfSamples = 10*256
+NumberOfSamples = 100*256
 samples = sdr.read_samples(NumberOfSamples) #read in data
 sdr.close()
-print(0.8*sample_rate/1000)
+#Clean first 0.8 ms of data
 samples = samples[int(0.8*sample_rate/1000):]
 NumberOfSamples-=int(0.8*sample_rate/1000)
+
+
+for i in samples:
+    f.write(str(i)+"\n")
+f.close()
 
 #Plot data
 #Time domain first
