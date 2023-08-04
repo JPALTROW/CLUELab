@@ -16,7 +16,7 @@ sdr.gain = 40.1
 
 f = open("output.txt", "w")
 #CHANGE NUMBER OF SAMPLES
-NumberOfSamples = 10000*256
+NumberOfSamples = 10000*256 #Needs to be a multiple of 256
 samples = sdr.read_samples(NumberOfSamples) #read in data
 sdr.close()
 #Clean first 0.8 ms of data
@@ -47,7 +47,8 @@ def get_samp(show_plot = False):
         ylabel('Relative power (dB)')
 
         show()
-
+        
+##Ignore this
 def cross_corr():
     sample_corr = []
     print(sample_rate/(2*center_freq))
